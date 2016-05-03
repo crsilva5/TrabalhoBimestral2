@@ -1,30 +1,32 @@
+package main;
 import anotacoes.Coluna;
 import anotacoes.Tabela;
 import enums.EstadoCivil;
 
 @Tabela("CAD_CLIENTE")
 public class Cliente {
-	
-	@Coluna(pk=true, nome="ID", tamanho=6)
+
+	@Coluna(pk = true, nome = "ID", tamanho = 6)
 	private int id;
-	
-	@Coluna(nome="CL_NOME", tamanho=50)
+
+	@Coluna(nome = "CL_NOME", tamanho = 50)
 	private String nome;
-	
-	@Coluna(nome="CL_ENDERECO", tamanho=80)
+
+	@Coluna(nome = "CL_ENDERECO", tamanho = 80)
 	private String endereco;
-	
-	@Coluna(nome="CL_TELEFONE", tamanho=10)
+
+	@Coluna(nome = "CL_TELEFONE", tamanho = 10)
 	private String telefone;
-	
-	@Coluna(nome="CL_ESTADOCIVIL", tamanho=30)
+
+	@Coluna(nome = "CL_ESTADOCIVIL", tamanho = 30)
 	private EstadoCivil estadoCivil;
-	
+
 	public Cliente() {
 		this(0, null, null, null, null);
 	}
 
-	public Cliente(int id, String nome, String endereco, String telefone, EstadoCivil estadoCivil) {
+	public Cliente(int id, String nome, String endereco, String telefone,
+			EstadoCivil estadoCivil) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -72,7 +74,5 @@ public class Cliente {
 	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
-
-
 
 }
