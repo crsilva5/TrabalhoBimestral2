@@ -99,7 +99,34 @@ public class ImplentDao {
 				} catch (SQLException e) {
 					e.printStackTrace();
 			}
-				System.out.println("Registro Alterado");
+		}
+				public void excluir(Object t) {
+					PreparedStatement excluir = impl.getSqlDeleteById(impl.getCon(), t);
+
+					Cliente cliente = (Cliente) t;
+
+					int exibir = 0;
+
+					System.out.println("EXCLUINDO REGISTRO");
+
+					try {
+						excluir.setInt(1, cliente.getId());
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+
+					try {
+						exibir = excluir.executeUpdate();
+						System.out.println(exibir + " Registro(s) excluido(s)!");
+						System.out.println("  Novo nome..........: " + cliente.getNome());
+						System.out.println("  Novo endereço......: " + cliente.getEndereco());
+						System.out.println("  Novo telefone......: " + cliente.getTelefone());
+						System.out.println("  Novo Estado civil..: " + cliente.getEstadoCivil());
+						System.out.println("  Excluidos para o ID: " + cliente.getId());
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					System.out.println("Registro Excluido");
 		}
 	}
 	
