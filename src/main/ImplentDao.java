@@ -1,7 +1,10 @@
 package main;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import enums.EstadoCivil;
 
 
 public class ImplentDao {
@@ -41,10 +44,33 @@ public class ImplentDao {
 
 		try {
 			insert.executeUpdate();
-			System.out.println("REGISTRO INCLUIDO!");
+			System.out.println("Registro Incluso!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-}
+		public Object buscar(Object k) {
+			
+			PreparedStatement buscar = impl.getSqlSelectById(impl.getCon(), k);
+
+			ResultSet exibir;
+			System.out.println("BUSCANDO REGISTRO");
+			try {
+				exibir = buscar.executeQuery();
+				while (exibir.next()) {
+					System.out.print("\nID: " + exibir.getInt("CL_ID"));
+					System.out.print("\nNome: " + exibir.getString("CL_NOME"));
+					System.out.print("\nEndereco: " + exibir.getString("CL_ENDERECO"));
+					System.out.print("\nTelefone: " + exibir.getString("CL_TELEFONE"));
+					System.out.print("\nEstadoCivil: " + EstadoCivil.values()[exibir.getInt("CL_ESTADOCIVIL")]);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			System.out.println("Fim de Registro!");
+			return null;
+		}
+			
+	}
+
