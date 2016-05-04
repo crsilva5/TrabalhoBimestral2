@@ -71,6 +71,36 @@ public class ImplentDao {
 			System.out.println("Fim de Registro!");
 			return null;
 		}
-			
+		public void atualizar(Object t) {
+				PreparedStatement alterar = impl.getSqlUpdateById(impl.getCon(), t);
+
+				Cliente cliente = (Cliente) t;
+
+				int exibir = 0;
+				
+				System.out.println("Alterando Registro");
+				try {
+					alterar.setString(1, cliente.getNome());
+					alterar.setString(2, cliente.getEndereco());
+					alterar.setString(3, cliente.getTelefone());
+					alterar.setInt(4, cliente.getEstadoCivil().ordinal());
+					alterar.setInt(5, cliente.getId());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				try {
+					exibir = alterar.executeUpdate();
+					System.out.print("\nNovo nome: " + cliente.getNome());
+					System.out.print("\nNovo endereço: " + cliente.getEndereco());
+					System.out.print("\nNovo telefone : " + cliente.getTelefone());
+					System.out.print("\nNovo estado civil : " + cliente.getEstadoCivil());
+					System.out.print("\n " + exibir + " Registro(s) alterados!");
+				} catch (SQLException e) {
+					e.printStackTrace();
+			}
+				System.out.println("Registro Alterado");
+		}
 	}
+	
 
