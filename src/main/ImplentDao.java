@@ -31,7 +31,7 @@ public class ImplentDao {
 	public void salvar(Object t) {
 		PreparedStatement insert = getImp().getSqlInsert(getImp().getCon(), t);
 
-		System.out.println("INCLUINDO REGISTRO");
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ INCLUINDO REGISTRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 		Cliente cliente = (Cliente) t;
 		try {
@@ -56,20 +56,20 @@ public class ImplentDao {
 			PreparedStatement buscar = impl.getSqlSelectById(impl.getCon(), k);
 
 			ResultSet exibir;
-			System.out.println("BUSCANDO REGISTRO");
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BUSCANDO REGISTRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			try {
 				exibir = buscar.executeQuery();
 				while (exibir.next()) {
-					System.out.print("\nID: " + exibir.getInt("CL_ID"));
-					System.out.print("\nNome: " + exibir.getString("CL_NOME"));
-					System.out.print("\nEndereco: " + exibir.getString("CL_ENDERECO"));
-					System.out.print("\nTelefone: " + exibir.getString("CL_TELEFONE"));
-					System.out.print("\nEstadoCivil: " + EstadoCivil.values()[exibir.getInt("CL_ESTADOCIVIL")]);
+					System.out.print("\nID			: " + exibir.getInt("CL_ID"));
+					System.out.print("\nNome			: " + exibir.getString("CL_NOME"));
+					System.out.print("\nEndereco		: " + exibir.getString("CL_ENDERECO"));
+					System.out.print("\nTelefone		: " + exibir.getString("CL_TELEFONE"));
+					System.out.print("\nEstadoCivil		: " + EstadoCivil.values()[exibir.getInt("CL_ESTADOCIVIL")]);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
+			System.out.println("\n");
 			System.out.println("Fim de Registro!");
 			return null;
 		}
@@ -80,7 +80,7 @@ public class ImplentDao {
 
 				int exibir = 0;
 				
-				System.out.println("Alterando Registro");
+				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Alterando Registro ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 				try {
 					alterar.setString(1, cliente.getNome());
 					alterar.setString(2, cliente.getEndereco());
@@ -93,11 +93,11 @@ public class ImplentDao {
 
 				try {
 					exibir = alterar.executeUpdate();
-					System.out.print("\nNovo nome: " + cliente.getNome());
-					System.out.print("\nNovo endereço: " + cliente.getEndereco());
-					System.out.print("\nNovo telefone : " + cliente.getTelefone());
-					System.out.print("\nNovo estado civil : " + cliente.getEstadoCivil());
-					System.out.print("\n " + exibir + " Registro(s) alterados!");
+					System.out.print("\nNovo nome		: " + cliente.getNome());
+					System.out.print("\nNovo endereço		: " + cliente.getEndereco());
+					System.out.print("\nNovo telefone		: " + cliente.getTelefone());
+					System.out.print("\nNovo estado civil 	: " + cliente.getEstadoCivil());
+					System.out.print("\n " + exibir + " Registro(s) alterado(s)!\n");
 				} catch (SQLException e) {
 					e.printStackTrace();
 			}
@@ -108,8 +108,10 @@ public class ImplentDao {
 					Cliente cliente = (Cliente) t;
 
 					int exibir = 0;
-
-					System.out.println("EXCLUINDO REGISTRO");
+					
+					System.out.println("\n");
+					
+					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EXCLUINDO REGISTRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 					try {
 						excluir.setInt(1, cliente.getId());
@@ -120,20 +122,22 @@ public class ImplentDao {
 					try {
 						exibir = excluir.executeUpdate();
 						System.out.println(exibir + " Registro(s) excluido(s)!");
-						System.out.println("  Novo nome..........: " + cliente.getNome());
-						System.out.println("  Novo endereço......: " + cliente.getEndereco());
-						System.out.println("  Novo telefone......: " + cliente.getTelefone());
-						System.out.println("  Novo Estado civil..: " + cliente.getEstadoCivil());
+						System.out.println("  Novo nome			: " + cliente.getNome());
+						System.out.println("  Novo endereço			: " + cliente.getEndereco());
+						System.out.println("  Novo telefone			: " + cliente.getTelefone());
+						System.out.println("  Novo Estado civil		: " + cliente.getEstadoCivil());
 						System.out.println("  Excluidos para o ID: " + cliente.getId());
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
+
+					System.out.println("\n");
 					System.out.println("Registro Excluido");
 		}
 				public List<Cliente> listarTodos(Object t) {
 					PreparedStatement listar = impl.getSqlSelectAll(impl.getCon(), t);
 
-					System.out.println("LISTANDO REGISTROS");
+					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LISTANDO REGISTROS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 					List<Cliente> clientes = new ArrayList<Cliente>();
 					ResultSet retorno = null;
@@ -163,6 +167,31 @@ public class ImplentDao {
 						System.out.println("\n");
 					}
 					return clientes;
+				}public void apagarTabela(Object obj){
+					String sql = getImp().getDropTable(getImp().getCon(), obj);
+
+					System.out.println(" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ APAGANDO TABELA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+					System.out.println(sql);
+					try (PreparedStatement ps = getImp().getCon().prepareStatement(sql)){
+						ps.executeUpdate();
+					} catch (SQLException e) {
+						System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TABELA NÃO ENCONTRADA! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+					}
 				}
+				
+				public void criarTabela(Object obj){
+					String sql = getImp().getCreateTable(getImp().getCon(), obj);
+
+					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CRIANDO TABELA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+					System.out.println(sql);
+
+					try (PreparedStatement ps = getImp().getCon().prepareStatement(sql)){
+						ps.executeUpdate();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			}
 	}
 

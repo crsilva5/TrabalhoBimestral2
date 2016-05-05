@@ -6,19 +6,19 @@ import enums.EstadoCivil;
 @Tabela("CAD_CLIENTE")
 public class Cliente {
 
-	@Coluna(pk = true, nome = "CL_ID", tamanho = 20)
+	@Coluna(pk = true, nome = "CL_ID", tamanho = 100)
 	private int id;
 
-	@Coluna(nome = "CL_NOME", tamanho = 50)
+	@Coluna(nome = "CL_NOME", tamanho = 100)
 	private String nome;
 
-	@Coluna(nome = "CL_ENDERECO", tamanho = 80)
+	@Coluna(nome = "CL_ENDERECO", tamanho = 100)
 	private String endereco;
 
-	@Coluna(nome = "CL_TELEFONE", tamanho = 30)
+	@Coluna(nome = "CL_TELEFONE", tamanho = 100)
 	private String telefone;
 
-	@Coluna(nome = "CL_ESTADOCIVIL", tamanho = 30)
+	@Coluna(nome = "CL_ESTADOCIVIL", tamanho = 100)
 	private EstadoCivil estadoCivil;
 
 	public Cliente() {

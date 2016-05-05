@@ -2,7 +2,7 @@ package abstrata;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
+// codigo fornecido no  enunciado do trabalho
 public abstract class SqlGen {
 	// DDL
 	protected abstract String getCreateTable(Connection con, Object obj);
